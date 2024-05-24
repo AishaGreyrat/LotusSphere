@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title #{title}
+    meta(charset='UTF-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel='stylesheet', href='/css/styles.css')
+    link(rel="icon" href="/images/favicon.png" type="image/x-icon")
+  body.signika-negative-font
+    nav
+      ul
+        li(class='izquierda')
+          a(href='/')
+            img(class="logo", src="/images/enigma-text-horizontal.png") 
+
+        if user
+          .derecha
+            li 
+              a.contenidoif(href="/historial")
+                h1 Historial 
+            li
+              a(href='/logout')
+                i(class='material-symbols-outlined') 
+                  h1 logout
+        else
+          .derecha
+            li
+              a.contenidoif(href='/login', id='loginBtn')
+                i(class='material-symbols-outlined') 
+                  h1 login
+          .derecha
+            li 
+              a#creditos(href='/creditos')
+                h1 Creditos
+          
+          
+.container
+  block content
