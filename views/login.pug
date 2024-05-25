@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h2 Iniciar sesión
+  form(action='/login', method='POST')
+    label(for='username') Usuario:
+    input.signika-negative-font(type='text', name='username', id='username', required)
+    label(for='password') Contraseña:
+    input.signika-negative-font(type='password', name='password', id='password', required)
+    button.signika-negative-font(type='submit' class='boton') Iniciar sesión
+  .parrafo-caja  
+    p ¿No tienes una cuenta? 
+        a.signika-negative-font(href='/register', id='abrirModal' class="RegistroBtn") Registrar
