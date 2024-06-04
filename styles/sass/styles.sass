@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0")
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap')
+
+//------------------------------------------------------------
+
+ // Variable overrides first
+$primary: #14a8c7
+$tertiary: #14a8c7
+$enable-shadows: true
+$prefix: "mo-"
+
+// Then import Bootstrap
+@import ../../node_modules/bootstrap/scss/bootstrap
+
+//------------------------------------------------------------
+
+$primary: #14a8c7
+$secondary: #5EF7E9
+$tertiary: url("https://static.vecteezy.com/system/resources/previews/000/621/296/large_2x/abstract-elegant-gray-and-white-squares-pattern-background-texture-vector.jpg")
+$blanco: #fff
+
+.material-symbols-rounded
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 48
+
+.material-symbols-outlined 
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 48
+
+.signika-negative-font 
+  font-family: "Signika Negative", sans-serif
+  font-optical-sizing: auto
+  font-weight: 700
+  font-style: normal
+
+
+body
+  font-size: 16px
+  background: $tertiary
+  margin: 0 auto
+  padding: 0
+  background-attachment: fixed
+  background-size: cover
+
+.card-body .btn 
+  margin: 10px, 10em
+
+.navConfig
+  background-color: #292a2b  
+
+.navbar
+  padding: .5em 1em !important
+  
+.logo
+  width: 118px
+  height: auto
+  margin-right: 12px
+  margin-top: -20px
+  margin-left: 68px
+.container-general
+  text-align: center
+
+textarea
+  width: auto
+  height: 150px
+  margin-bottom: 10px
+  resize: none
+  padding: 12px
+  border: 2px solid #161616
+  border-radius: 20px
+  border-style: inset
+
+.boton
+  padding: 10px 20px
+  font-size: 16px
+  display: block
+  margin: auto
+  text-align: center
+  background: linear-gradient(45deg, #3b679e 0%, #14a8c7 46%, #14a8c7 63%, #7db9e8 100%)
+  border: 2px solid #14a8c7
+  border-radius: 10px
+  color: white
+  font-size: 90%
+
+.boton:hover
+  background: linear-gradient(45deg, #3b679e 0%, #11cef5 46%, #17d2f9 63%, #7db9e8 100%)
+
+.material-symbols-outlined
+  font-size: 18px
+
+.container-general h1 
+  margin-top: 1%
+
+
+
+  
+/* Estilos para los textos */
+.textos 
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.textos p 
+  margin: 5px 0
+
+
+// pagina
+
+h2
+  text-align: center
+  margin-top: 8%
+
+form
+  display: grid
+  grid-row-gap: 10px
+  padding: 5% 0px 4% 0%
+  width: 50%
+  margin: 0 auto
+
+
+
+
+label
+  font-weight: bold
+
+input[type='text'],
+input[type='email'],
+input[type='password']
+  width: 100%
+  padding: 8px
+  border: 1px solid #ccc
+  border-radius: 4px
+  box-sizing: border-box
+
+input[type='submit']
+  background-color: #4CAF50
+  color: white
+  padding: 10px 20px
+  border: none
+  border-radius: 4px
+  cursor: pointer
+  width: 30%
+  
+
+  &:hover
+    background-color: #45a049
+
+.parrafo-caja
+  text-align: center
+  margin-top: 10px
+  margin: 0 auto
+
+.itemConf
+  color: white
+
+a
+  color: #c74714
+
+  &:hover
+    text-decoration: underline
+
+//media
+
+@media only screen and (max-width: 1210px)
+  form
+    padding: 20px 20px 70px
+    width: 90%
+
+@media only screen and (max-width: 870px)
+  form
+    padding: 10px 1px 15px
+    width: 70%
+
+  .parrafo-caja
+    width: 70%
+    margin: 0 auto
+    padding: 10px 1px 5px
+@media only screen and (max-width: 536px)
+  #creditos
+    display: none
+  nav li
+    margin-left: 0px
+
+@media only screen and (max-width: 445px)
+  h1
+    font-size: 130%
+
+  form
+    padding: 10px 1px 15px
+    width: 100%
+
+  .parrafo-caja
+    width: 100%
+    margin: 0 auto
+    padding: 10px 1px 5px
+@media only screen and (max-width: 384px)
+  .contenidoif
+      display: none

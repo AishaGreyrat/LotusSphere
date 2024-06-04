@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    .row
+      .col-lg-4
+        .card.mb-4
+          .card-body.text-center
+            img(src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;")
+            h5.my-3 #{user.nombre}
+            p.text-muted.mb-4 #{user.usuario}
+      .col-lg-8
+        .card.mb-4
+          .card-body
+            .row
+              .col-sm-3
+                p.mb-0 Nombre Completo:
+              .col-sm-9
+                p.text-muted.mb-0 #{user.nombre}
+            hr
+            .row
+              .col-sm-3
+                p.mb-0 Usuario:
+              .col-sm-9
+                p.text-muted.mb-0 #{user.usuario}
+            hr
+            .row
+              .col-sm-3
+                p.mb-0 Correo Electronico:
+              .col-sm-9
+                p.text-muted.mb-0 #{user.email}

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  .container
+    .d-flex.justify-content-between.align-items-center.mb-4
+      h1 Mis Proyectos
+      button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#createProjectModal") Crear nuevo proyecto
+
+    // Modal para crear nuevos proyectos
+    .modal.fade(id="createProjectModal", tabindex="-1", aria-labelledby="createProjectModalLabel", aria-hidden="true")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5.modal-title(id="createProjectModalLabel") Crear Proyecto
+            button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+          .modal-body
+            form(action="/proyectos" method="POST")
+              .mb-3
+                label(for="titulo" class="form-label") Título
+                input#titulo.form-control(type="text" name="titulo" required)
+              .mb-3
+                label(for="descripcion" class="form-label") Descripción
+                textarea#descripcion.form-control(name="descripcion" rows="3" required)
+              .mb-3
+                label(for="fechaInicio" class="form-label") Fecha de Inicio
+                input#fechaInicio.form-control(type="date" name="fechaInicio" required)
+              .mb-3
+                label(for="fechaFin" class="form-label") Fecha de Fin
+                input#fechaFin.form-control(type="date" name="fechaFin" required)
+              .modal-footer
+                button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cerrar
+                button.btn.btn-primary(type="submit") Guardar cambios
+
+    #projectContainer.row
+      if !proyectos.length
+        .col-12
+          p No hay proyectos para mostrar
+      else
+        each proyecto in proyectos
+          .col-md-4.mb-4
+              .card.h-100
+                .card-body.d-flex.flex-column.justify-content-between
+                  h5.card-title= proyecto.nombre
+                  p.card-text= proyecto.descripcion
+                  p.card-text
+                    small.text-muted Fecha de inicio: #{new Date(proyecto.fecha_inicio).toLocaleDateString()}
+                  p.card-text
+                    small.text-muted Fecha de fin: #{new Date(proyecto.fecha_fin).toLocaleDateString()}
+                  .mt-auto
+                    .d-flex.justify-content-between
+                      a.btn.btn-secondary(href=`/proyectos/${proyecto.id}`) Ver Proyecto
+                      a.btn.btn-secondary.me-2(href=`/proyectos/editar/${proyecto.id}`) Editar
+                      a.btn.btn-danger(href=`/proyectos/eliminar/${proyecto.id}`) Eliminar
+
+  script.
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('fechaInicio').value = today;
+    });

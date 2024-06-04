@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    .container
+        h1 Editar Proyecto
+        form(action=`/proyectos/editar/${proyecto.id}` method="POST")
+            .mb-3
+                label(for="nombre" class="form-label") Nombre
+                input#nombre.form-control(type="text" name="nombre" value=proyecto.nombre required)
+            .mb-3
+                label(for="descripcion" class="form-label") Descripción
+                textarea#descripcion.form-control(name="descripcion" rows="3" required)= proyecto.descripcion
+            .mb-3
+                label(for="fecha_inicio" class="form-label") Fecha de Inicio
+                input#fecha_inicio.form-control(type="date" name="fecha_inicio" value=proyecto.fecha_inicio required)
+            .mb-3
+                label(for="fecha_fin" class="form-label") Fecha de Fin
+                input#fecha_fin.form-control(type="date" name="fecha_fin" value=proyecto.fecha_fin required)
+            .modal-footer
+                button.btn.btn-secondary(type="button", onclick="window.location.href='/proyectos'") Cancelar
+                button.btn.btn-primary(type="submit") Guardar cambios

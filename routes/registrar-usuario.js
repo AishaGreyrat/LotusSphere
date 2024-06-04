@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController'); // Archivo contenedor de querys para MySQL
-const userModel = require('../models/userModel');
+const userController = require('../controllers/userController');
+const authMiddleWare = require('../middlewares/authMiddleware');
 
 // Ruta para manejar el registro de usuarios
 router.post('/', async (req, res) => {
-    const { nombre, email, password, confirmPassword } = req.body;
+    const { nombre, usuario, email, password, confirmPassword } = req.body;
 
     // Verificar si la contraseña y su confirmación coinciden
     if (password !== confirmPassword) {
@@ -13,15 +13,17 @@ router.post('/', async (req, res) => {
     }
 
     try {
-
         // Verificar si el usuario ya está registrado
-        const usuarioExistente = await userModel.verificarRegistro(nombre);
-        console.log('usuarioExistente = ', usuarioExistente);
+        // const usuarioExistente = await usuarioController.obtenerUsuarioPorNombre(nombre);
+        // if (usuarioExistente) {
+        //     return res.status(400).send('El usuario ya está registrado');
+        // }
 
-        console.log('nombre, email. password = ', nombre, email, password);
+        // Hash de la contraseña
+        const password_hash = await authMiddleWare.getHash(password);
 
         // Registrar el usuario en la base de datos
-        await userController.registrarUsuario(nombre, email, password);
+        await userController.registrarUsuario(nombre, usuario, email, password_hash);
 
         // Usuario insertado correctamente
         res.redirect('/login');

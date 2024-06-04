@@ -1,54 +1,41 @@
-require('dotenv').config();
 const axios = require('axios');
 
-// Lee el valor de BASE_URL desde el archivo .env
-const BASE_URL = process.env.BASE_URL;
-
 class Usuario {
-    constructor(id, nombre, email, password_hash) {
+    constructor(id, nombre, usuario, email, contraseña) {
         this.id = id;
         this.nombre = nombre;
+        this.usuario = usuario;
         this.email = email;
-        this.password_hash = password_hash;
+        this.contraseña = contraseña;
     }
 }
 
 async function registrarUsuario(dataSegura) {
     try {
-        console.log('dataSegura = ',dataSegura.nombre);
-        await axios.post(`${BASE_URL}/usuarios/registrar`, { dataSegura });
+        console.log('objeto usuarios siendo recibida por el modelo = ',dataSegura);
+        
+        await axios.post(`${process.env.BASE_URL}/usuarios/registrar`, { dataSegura });
         console.log('se pudo registrar el usuario', dataSegura);
     } catch (error) {
-        console.error('Error al registrar usuario:', error);
-        throw error;
+        console.error('Error al registrar usuario:', error.message);
     }
 }
 
 async function logearUsuario(dataSegura) {
     try {
-        const response = await axios.post(`${BASE_URL}/usuarios/login`, {dataSegura});
+        console.log('se logea el usuario');                                  
+        const response = await axios.post(`${process.env.BASE_URL}/usuarios/login`, {dataSegura});
         const usuario = response.data;
-        return new Usuario(usuario.id, usuario.nombre, usuario.email, usuario.password_hash);
+        console.log('new Usuario = ', usuario);
+        return new Usuario(usuario.id, usuario.nombre, usuario.usuario, usuario.email, usuario.contraseña);
     } catch (error) {
-        console.error('Error al obtener usuario por nombre:', error);
-        throw error;
+        console.error('Error al obtener usuario por nombre:', error.message);
     }
 }
 
-// Enviar datos al backend para verificar si el usuario está registrado
-async function verificarRegistro(nombre) {
-    try {
-        const response = await axios.post(`${BASE_URL}/usuarios/verificar-registro`, { nombre });
-        console.log(response.data, nombre);
-        return response.data; // Puede ser 'true' si el usuario está registrado, 'false' si no lo está
-    } catch (error) {
-        console.error('Error al verificar registro:', error);
-        throw error;
-    }
-}
 
 module.exports = {
     registrarUsuario,
     logearUsuario,
-    verificarRegistro
+    Usuario
 };

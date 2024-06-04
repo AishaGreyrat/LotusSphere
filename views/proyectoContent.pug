@@ -1,0 +1,107 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-12
+        h1= proyecto.nombre
+        p= proyecto.descripcion
+        button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#createTaskModal") Crear nueva tarea
+
+        // Modal para crear nuevas tareas
+        .modal.fade(id="createTaskModal", tabindex="-1", aria-labelledby="createTaskModalLabel", aria-hidden="true")
+          .modal-dialog
+            .modal-content
+              .modal-header
+                h5.modal-title(id="createTaskModalLabel") Crear Tarea
+                button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+              .modal-body
+                form(action=`/proyectos/${proyecto.id}/tareas` method="POST")
+                  .mb-3
+                    label(for="nombre" class="form-label") Nombre de la Tarea
+                    input#nombre.form-control(type="text" name="nombre" required)
+                  .mb-3
+                    label(for="descripcion" class="form-label") Descripción
+                    textarea#descripcion.form-control(name="descripcion" rows="3" required)
+                  .mb-3
+                    label(for="fecha_inicio" class="form-label") Fecha de Inicio
+                    input#fecha_inicio.form-control(type="date" name="fecha_inicio")
+                  .mb-3
+                    label(for="fecha_fin" class="form-label") Fecha de Fin
+                    input#fecha_fin.form-control(type="date" name="fecha_fin")
+                  .modal-footer
+                    button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cerrar
+                    button.btn.btn-primary(type="submit") Guardar cambios
+
+    // Sección de tareas
+    #taskContainer.row
+      if !tareas.length
+        .col-12
+          p No hay tareas para mostrar
+      else
+        each tarea in tareas
+          .col-md-4.mb-4
+            .card
+              .card-body.d-flex.flex-column.justify-content-between
+                h5.card-title= tarea.nombre
+                p.card-text= tarea.descripcion
+                p.card-text
+                  small.text-muted Fecha límite: #{new Date(tarea.fecha_fin).toLocaleDateString()}
+                p.card-text
+                  small.text-muted Asignado a: #{tarea.asignado_a}
+                .mt-3
+                  button.btn.btn-secondary(type="button", data-bs-toggle="modal", data-bs-target=`#assignUserModal-${tarea.id}`) Asignar Persona
+                  button.btn.btn-secondary(type="button", data-bs-toggle="modal", data-bs-target=`#addMilestoneModal-${tarea.id}`) Agregar Hito
+                  button.btn.btn-secondary(type="button", data-bs-toggle="modal", data-bs-target=`#updateDeadlineModal-${tarea.id}`) Actualizar Fecha Límite
+                .mt-3
+                  a.btn.btn-danger(href=`/proyectos/${proyecto.id}/tareas/eliminar/${tarea.id}`) Eliminar
+
+    // Modales dinámicos para cada tarea
+    each tarea in tareas
+      // Modal para asignar persona
+      .modal.fade(id=`assignUserModal-${tarea.id}`, tabindex="-1", aria-labelledby=`assignUserModalLabel-${tarea.id}`, aria-hidden="true")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              h5.modal-title(id=`assignUserModalLabel-${tarea.id}`) Asignar Persona
+              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+            .modal-body
+              form(action=`/proyectos/${proyecto.id}/tareas/asignar/${tarea.id}` method="POST")
+                .mb-3
+                  label(for="persona" class="form-label") Persona
+                  input#persona.form-control(type="text" name="persona" required)
+                .modal-footer
+                  button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cerrar
+                  button.btn.btn-primary(type="submit") Guardar cambios
+
+      // Modal para agregar hito
+      .modal.fade(id=`addMilestoneModal-${tarea.id}`, tabindex="-1", aria-labelledby=`addMilestoneModalLabel-${tarea.id}`, aria-hidden="true")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              h5.modal-title(id=`addMilestoneModalLabel-${tarea.id}`) Agregar Hito
+              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+            .modal-body
+              form(action=`/proyectos/${proyecto.id}/tareas/hitos/${tarea.id}` method="POST")
+                .mb-3
+                  label(for="hito" class="form-label") Hito
+                  input#hito.form-control(type="text" name="hito" required)
+                .modal-footer
+                  button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cerrar
+                  button.btn.btn-primary(type="submit") Guardar cambios
+
+      // Modal para actualizar fecha límite
+      .modal.fade(id=`updateDeadlineModal-${tarea.id}`, tabindex="-1", aria-labelledby=`updateDeadlineModalLabel-${tarea.id}`, aria-hidden="true")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              h5.modal-title(id=`updateDeadlineModalLabel-${tarea.id}`) Actualizar Fecha Límite
+              button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+            .modal-body
+              form(action=`/proyectos/${proyecto.id}/tareas/fecha/${tarea.id}` method="POST")
+                .mb-3
+                  label(for="fechaLimite" class="form-label") Nueva Fecha Límite
+                  input#fechaLimite.form-control(type="date" name="fechaLimite" required)
+                .modal-footer
+                  button.btn.btn-secondary(type="button", data-bs-dismiss="modal") Cerrar
+                  button.btn.btn-primary(type="submit") Guardar cambios

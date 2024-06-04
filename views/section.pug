@@ -1,0 +1,12 @@
+extends layout
+
+block contentHead
+    section(style="background-color: #eee;")
+      .container.py-5
+        .row
+          .col
+            nav(aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4")
+              ol.breadcrumb.mb-0
+                li.breadcrumb-item: a(href="#") Home
+                li.breadcrumb-item: a(href="#") mis Proyectos
+                li.breadcrumb-item.active(aria-current="page") Perfil del usuarios
