@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
     res.render('proyectos', { proyectos: proyectos || [] });
 });
 
+router.post('/', async (req, res) => {
+    const {titulo, descripcion, fechaInicio, fechaFin } = req.body;
+    const userId = req.user.id;
+    console.log('req.user = ', req.user);
+    console.log('userId = ', userId);
+
+    await proyectosController.CrearProyecto(titulo, descripcion, fechaInicio, fechaFin, userId);
+
+    res.redirect('/proyectos');
+});
+
 // Ruta para obtener un proyecto específico por su ID y sus tareas
 router.get('/:id', async (req, res) => {
     const proyectoId = req.params.id;

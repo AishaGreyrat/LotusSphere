@@ -1,5 +1,18 @@
 const proyectoModel = require('../models/proyectModel');
 
+async function CrearProyecto(titulo, descripcion, fechaInicio, fechaFin, userId){
+
+    proyecto = {
+        titulo: titulo,
+        descripcion: descripcion,
+        fechaInicio: fechaInicio, 
+        fechaFin: fechaFin, 
+        userId: userId
+    }
+    await proyectoModel.crearNuevoProyecto(proyecto);
+}
+
+
 async function obtenerMisProyectos(userId) {
     try {
         const proyectos = await proyectoModel.obtenerMisProyectos(userId);
@@ -58,6 +71,7 @@ async function crearHito(proyectoId, data) {
 }
 
 module.exports = {
+    CrearProyecto,
     obtenerMisProyectos,
     obtenerProyectoPorId,
     obtenerTareas,
